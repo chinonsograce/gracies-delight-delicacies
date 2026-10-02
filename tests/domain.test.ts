@@ -1,0 +1,6 @@
+import {test} from 'node:test';import assert from 'node:assert/strict';import {priceCart,needsApproval} from '../lib/domain.ts';import {demoCatalog} from '../lib/catalog.ts';
+const foil=demoCatalog.find(v=>v.collection==='Foil Cake Packs')!;
+test('AC-02a invalid quantities rejected',()=>{for(const quantity of [0,-1,1.5,101])assert.throws(()=>priceCart([{variant_id:foil.id,quantity}],demoCatalog));});
+test('AC-02b two foil packs mean twelve pieces, trusted pricing',()=>{const [l]=priceCart([{variant_id:foil.id,quantity:2}],demoCatalog);assert.equal(l.quantity*l.variant.pieces_per_unit!,12);assert.equal(l.line_total,foil.price_minor*2);});
+test('AC-05b blocked variants and duplicate lines rejected',()=>{assert.throws(()=>priceCart([{variant_id:demoCatalog.find(v=>v.launch_blockers.length)!.id,quantity:1}],demoCatalog));assert.throws(()=>priceCart([{variant_id:foil.id,quantity:1},{variant_id:foil.id,quantity:1}],demoCatalog));});
+test('AC-06a rolling 24h demo boundary',()=>{const now=Date.parse('2026-10-01T10:00:00Z');assert.equal(needsApproval('2026-10-02T09:59:59Z',now),true);assert.equal(needsApproval('2026-10-02T10:00:00Z',now),false);assert.throws(()=>needsApproval('2026-10-01T09:00:00Z',now));});

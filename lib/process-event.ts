@@ -1,0 +1,3 @@
+import {db,email} from './server';import {verify} from './payment';import {z} from 'zod';
+const event=z.object({order_id:z.string().uuid(),event_id:z.string().max(100),amount_minor:z.number().int().nonnegative(),currency:z.string().length(3)});
+export async function processEvent(raw:string,signature:string){if(!await verify(raw,signature))throw new Error('Invalid payment signature.');const e=event.parse(JSON.parse(raw));const result=await db('rpc/verify_demo_event',{method:'POST',body:JSON.stringify({oid:e.order_id,eid:e.event_id,amount:e.amount_minor,event_currency:e.currency})});const delivery=await email(result);return {...result,email_status:delivery.status};}
