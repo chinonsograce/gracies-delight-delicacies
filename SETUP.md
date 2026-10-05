@@ -5,7 +5,7 @@ The storefront is implemented. External services are not connected until you con
 ## 1. Supabase: database and customer accounts
 
 1. Create a project at https://supabase.com/dashboard. Save your database password securely.
-2. Open SQL Editor. Run `supabase/migrations/001_shop.sql` once, then `supabase/migrations/002_expiry.sql`, then `supabase/seed.sql`. The seed preserves existing prices and availability.
+2. Open SQL Editor. Run `supabase/migrations/001_shop.sql` once, then `supabase/migrations/002_expiry.sql`, then `supabase/migrations/003_cart.sql`, then `supabase/seed.sql`. The seed preserves existing prices and availability. `003_cart.sql` adds the shared server-side bag (`cart_items`) with its RLS policies and adds the table to the `supabase_realtime` publication, which is what lets web and mobile carts sync instantly.
 3. Project settings → API: find your project URL and the public anon key. Find the service role key under API keys. The service role key is secret and must only be placed in server environment settings.
 4. Set `SUPABASE_URL`, `SUPABASE_ANON_KEY`, and secret `SUPABASE_SERVICE_ROLE_KEY` on the hosting service. For local development, copy `.env.example` to `.env` and fill it in. Never commit `.env` or paste secret keys into chat.
 5. Check catalogue rows in Table Editor. Orders and item snapshots are stored in a single database transaction. Every table has row-level security. Customers have no direct order-write permission.
