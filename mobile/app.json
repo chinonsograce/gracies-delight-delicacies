@@ -1,0 +1,33 @@
+{
+  "expo": {
+    "name": "Gracie's Delight Delicacies",
+    "slug": "gracies-delight-mobile",
+    "owner": "gracies-delight-delicacies",
+    "scheme": "graciedelight",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "package": "com.chinonsograce.graciesdelight",
+      "adaptiveIcon": {
+        "backgroundColor": "#E6F4FE",
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "backgroundImage": "./assets/android-icon-background.png",
+        "monochromeImage": "./assets/android-icon-monochrome.png"
+      },
+      "predictiveBackGestureEnabled": false
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "d9e85392-59a7-41f7-9bb7-5ece3c760f76"
+      }
+    }
+  }
+}

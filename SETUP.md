@@ -17,9 +17,10 @@ The storefront is implemented. External services are not connected until you con
 3. Create an OAuth client of type **Web application**. Set authorized redirect URI to `https://YOUR_PROJECT_REF.supabase.co/auth/v1/callback`. Copy the exact callback URL shown by Supabase's Google provider page.
 4. Supabase → Authentication → Sign In / Providers → Google: enable it, add the Google client ID and secret, and save. These Google credentials belong in Supabase, never frontend code.
 5. Supabase → Authentication → URL Configuration: set the site URL to your deployed website. Add its exact root URL with trailing `/` to Redirect URLs. For local development add the actual localhost root URL too.
-6. Test adding items, signing in, and returning to checkout with the bag intact. Also test cancellation. Publish the consent screen before inviting ordinary customers; Testing only allows listed test users.
+6. For the mobile app only, add its redirect URI to the same Redirect URLs list: `graciedelight://oauth2redirect` for a development or production build, or the exact `exp://<lan-ip>:8081/--/oauth2redirect` value the app prints at startup when running inside Expo Go. Google Cloud Console needs no extra entry: Google always redirects to Supabase's `/auth/v1/callback`; this is only the Supabase → app leg of the PKCE flow.
+7. Test adding items, signing in, and returning to checkout with the bag intact. Also test cancellation. Publish the consent screen before inviting ordinary customers; Testing only allows listed test users.
 
-The app requests `openid email profile`, uses PKCE, and sends the Supabase access token to the server. Sessions currently require signing in again after token expiry; automatic session refresh is a follow-up improvement.
+The app requests `openid email profile`, uses PKCE, and sends the Supabase access token to the server. The web session currently requires signing in again after token expiry; the mobile app stores both tokens in the device keychain and refreshes on launch. Automatic refresh on the web is a follow-up improvement.
 
 Official guide: https://supabase.com/docs/guides/auth/social-login/auth-google
 
@@ -73,3 +74,14 @@ pnpm preflight
 ```
 
 `db:seed` generates SQL; run it in Supabase SQL Editor. `db:migrate` prints the migration path for the same manual workflow. `preflight` inspects runtime environment and the database, listing pending settings and demo prices/images/allergen gaps. It fails if credentials are missing or live commerce is enabled. E2E and two-user RLS checks require a connected project and test accounts and are not yet automated.
+
+Mobile client (Expo, from `mobile/`; uses npm, not pnpm):
+
+```bash
+cd mobile
+npm install             # add --maxsockets=2 if the install stalls
+npx tsc --noEmit        # typecheck
+npx expo start          # scan the QR with Expo Go on a phone on the same network
+```
+
+The phone talks to the deployed API in `mobile/src/config.ts`, so it needs no local server and no secrets of its own.
