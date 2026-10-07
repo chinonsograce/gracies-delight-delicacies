@@ -19,6 +19,18 @@ export type Variant = {
 
 export type Line = { variant_id: string; quantity: number };
 
+/** Shop categories in the approved order. "All bakes" is the unfiltered view. */
+export const CATEGORY_ORDER = ["All bakes", "Classic Cakes", "Banana Bread", "Bliss Mini Mix", "Foil Cake Packs"];
+const MINI_MIX_LEGACY = ["Banana Bliss Mini Mix", "Classic Cake Mini Mix"];
+export const displayCollection = (collection: string) => (MINI_MIX_LEGACY.includes(collection) ? "Bliss Mini Mix" : collection);
+export const isRetired = (v: { name: string; collection: string }) => v.collection === "Muffins" || v.name === "Blueberry Banana";
+/** Drop retired bakes and present both mini mixes under one category, mirroring the website. */
+export function normalizeCatalog<T extends { name: string; collection: string }>(rows: T[]): T[] {
+  return rows
+    .filter((r) => !isRetired(r))
+    .map((r) => (r.collection === displayCollection(r.collection) ? r : { ...r, collection: displayCollection(r.collection) }));
+}
+
 /** One shop card: every size/pack option of a single bake. */
 export type Product = { key: string; name: string; collection: string; variants: Variant[] };
 

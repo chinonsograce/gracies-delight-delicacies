@@ -13,6 +13,7 @@ import { OrdersScreen } from "./src/screens/OrdersScreen";
 import { ProductScreen } from "./src/screens/ProductScreen";
 import { ShopScreen } from "./src/screens/ShopScreen";
 import type { Line, Order, Product, Profile, Variant } from "./src/types";
+import { normalizeCatalog } from "./src/types";
 import { Busy, palette } from "./src/ui";
 
 type Screen =
@@ -79,7 +80,7 @@ export default function App() {
       ]);
       if (!alive) return;
       setConfig(cfg);
-      if (catalog) setVariants(catalog.variants);
+      if (catalog) setVariants(normalizeCatalog(catalog.variants));
       else setCatalogError("Could not reach the shop. Check your connection.");
 
       const restored = await auth.restore().catch(() => null);
@@ -185,7 +186,7 @@ export default function App() {
       <StatusBar barStyle="dark-content" backgroundColor={palette.cream} />
       <View style={styles.header}>
         <Pressable onPress={() => setScreen({ name: "shop" })}>
-          <Text style={styles.title}>Grace's Delight</Text>
+          <Text style={styles.title}>{"Grace's Delight"}</Text>
         </Pressable>
         <View style={styles.headerActions}>
           <Pressable style={styles.headerBtn} onPress={() => (token ? setScreen({ name: "orders" }) : void signIn())}>

@@ -56,6 +56,13 @@ Minimum tables (foreign keys, timestamps, constraints, indexes throughout):
 - **Foil Cake Packs:** the sellable unit is a **pack of six** (`sell_unit = pack`, `pieces_per_unit = 6`, `min_qty = 1`, `qty_step = 1`). Quantity means packs; display pieces as `quantity × 6` in cart, checkout, order, and email. Adding the same flavour again merges into one cart line. Each flavour is its own line. The server rejects non-integer, zero, negative, or over-limit quantities and any variant that is not a six-pack.
 - Cart line identity is `variant_id`. Guest carts store only `variant_id` and quantity in client storage (never prices), survive the Google redirect, and are fully revalidated on checkout.
 
+### Approved catalogue changes (October 2026)
+
+- Shop categories, in order: **All bakes, Classic Cakes, Banana Bread, Bliss Mini Mix, Foil Cake Packs** (plus Seasonal Bakes when owner-activated).
+- **Bliss Mini Mix** is one display category containing two product cards: Banana Bliss Mini Mix and Classic Cake Mini Mix. Stored `collection` values, product IDs and variant IDs are unchanged; the merge happens in the application layer (`normalizeCatalog` in `lib/catalog.ts` for web/API and `mobile/src/types.ts` for the app). Never rename stored collection values: seed and variant IDs derive from them.
+- **Retired:** Blueberry Banana and every Muffins product (all sizes/packs). They are filtered from `/api/catalog`, rejected by cart PUT and order POST via `isRetired`, hidden from both bags even when previously saved, and deactivated in `supabase/migrations/005_catalog_update.sql`. Historical orders and their `order_items` snapshots are never modified.
+- Each product appears exactly once in the shop grid; the card shows image, category, name, starting price ("From …" only when variant prices differ) and a **Choose options** action that opens the product page with the size/pack selector.
+
 ## 5. Order lifecycle and payment handling
 
 Three separate fields. Do not collapse them into one status.

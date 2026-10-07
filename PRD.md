@@ -46,18 +46,18 @@ Support the full catalogue below while letting the owner activate only a managea
 | Collection | Flavours / products | Variants and constraints |
 | --- | --- | --- |
 | Classic Cakes | Classic Vanilla; Rich Chocolate; Red Velvet; Coconut; Marble; Cookies & Cream | 6, 8, 10, 12 inches for each flavour. |
-| Banana Bread | Classic Banana; Peanut Butter Banana; Nutty Banana; Chocolate Chip Banana; Nutella Banana; Double Chocolate Banana; Blueberry Banana; Coconut Banana; Coconut & Raisin Banana | Small, Medium, Large. Dimensions/weights and the Small selling unit await owner confirmation. Keep distinct from Banana Bliss packs. |
-| Banana Bliss Mini Mix | Mini banana bread variety packs | 4-piece and 6-piece packs with owner-defined preset combinations (pending). No customer-built assortments. |
-| Mini Mix | Regular mini cakes | 4-pack: one each Chocolate, Red Velvet, Vanilla, Cookies & Cream. 6-pack: those four plus one Marble and one Coconut. Fixed assortments. |
+| Banana Bread | Classic Banana; Peanut Butter Banana; Nutty Banana; Chocolate Chip Banana; Nutella Banana; Double Chocolate Banana; Coconut Banana; Coconut & Raisin Banana | Small, Medium, Large. Dimensions/weights and the Small selling unit await owner confirmation. Keep distinct from Bliss Mini Mix packs. |
+| Bliss Mini Mix | Banana Bliss Mini Mix (mini banana bread variety packs); Classic Cake Mini Mix (regular mini cakes) | Two product cards in one category. 4-piece and 6-piece packs. Classic Cake Mini Mix: 4-pack one each Chocolate, Red Velvet, Vanilla, Cookies & Cream; 6-pack adds one Marble and one Coconut. Banana Bliss preset combinations await owner confirmation. Fixed assortments only; no customer-built mixes. |
 | Foil Cake Packs | Chocolate; Red Velvet; Vanilla; Marble; Cookies & Cream | Small foil cakes. Minimum 6 pieces, then multiples of 6 (12, 18, 24 and above). One flavour per group of 6. No single pieces. |
-| Muffins | Double Chocolate; Chocolate Chip; Blueberry | 4-piece and 6-piece packs. One flavour per pack is a provisional choice; mixed assortments need owner approval. |
 | Seasonal Bakes | Fruit Cake; Strawberry Cake; Blueberry Cake | Visible only when owner-activated. Sizes, availability, and prices must be configured first; Classic Cakes sizes do not carry over. |
+
+**Approved launch categories.** The shop presents, in order: All bakes, Classic Cakes, Banana Bread, Bliss Mini Mix, Foil Cake Packs. Blueberry Banana and the Muffins collection were removed from sale; they stay unpurchasable through old links and saved bags, while historical order records are preserved.
 
 **Foil packs.** The sellable unit is a **pack of six**. Quantity means packs, so two packs display as 12 pieces. Each flavour is its own cart line, and re-adding a flavour increases that line. Show total pieces in the cart, order, and email. Enforce on the server as well as in the interface.
 
-**Not-yet-purchasable items.** Banana Bliss packs, Small Banana Bread, and Seasonal Bakes appear as unavailable until their pending data is supplied. Development placeholders are allowed only if clearly labelled and blocked from live checkout.
+**Not-yet-purchasable items.** Banana Bliss Mini Mix packs, Small Banana Bread, and Seasonal Bakes appear as unavailable until their pending data is supplied. Development placeholders are allowed only if clearly labelled and blocked from live checkout.
 
-**Naming.** Mini Mix and Foil use "Chocolate" and "Vanilla" while Classic Cakes use "Rich Chocolate" and "Classic Vanilla". Keep collection-specific display names as written, but link them to a shared flavour key for consistency. The owner may confirm or rename.
+**Naming.** Bliss Mini Mix and Foil use "Chocolate" and "Vanilla" while Classic Cakes use "Rich Chocolate" and "Classic Vanilla". Keep collection-specific display names as written, but link them to a shared flavour key for consistency. The owner may confirm or rename.
 
 ## 5. Business rules
 
@@ -116,7 +116,7 @@ Totals are calculated server-side from trusted prices and approved fees, stored 
 | Page | Required experience |
 | --- | --- |
 | Home | Exact name and tagline; made-to-order promise; Shop action; collection highlights; one-day notice; pickup-only guidance; urgent route. No fabricated testimonials or popularity claims. |
-| Shop | Six core collections plus active Seasonal Bakes; images, names, availability, starting prices with demo disclosure. |
+| Shop | Four launch collections (Classic Cakes, Banana Bread, Bliss Mini Mix, Foil Cake Packs) plus active Seasonal Bakes; one card per product with image, category, starting price, and a Choose options action; demo disclosure retained. |
 | Product Details | Description; image disclosure; valid flavour/size/pack selectors; exact preset contents; price; quantity unit; order notice; foil rules; allergen information when supplied. Add to Cart requires a valid selection. |
 | Cart | Edit/remove; preserve variants and contents; distinguish pieces from packs; subtotal; policy reminders; checkout action. Survives sign-in; revalidated at checkout. |
 | Google Sign-in | Required before completing checkout and viewing order history. Clear cancellation/error handling, return to checkout with cart intact, sign-out. |
@@ -208,9 +208,8 @@ These describe implementation order, not a schedule or extra scope.
 | One-day notice rule, cutoff, timezone | 24-hour minimum, configurable | Launch |
 | Pickup location, hours, slots, blackout dates, capacity, instructions | None invented; checkout cannot go live without them | Launch |
 | Payment method/provider | Labelled demo adapter | Launch |
-| Banana Bliss 4-pack and 6-pack contents | Not purchasable | Launch |
+| Banana Bliss Mini Mix 4-pack and 6-pack contents | Not purchasable | Launch |
 | Banana Bread sizes (dimensions/weights, Small selling unit) | Labels only | Launch |
-| Muffin assortment | Single-flavour packs | Launch |
 | Seasonal Bakes sizes, prices, availability | Hidden/not purchasable | Launch |
 | Owner contact details, About content | Placeholders flagged | Launch |
 | Verified ingredient/allergen information per product (BR-12, proposed) | "Allergen information pending" notice | Launch |
