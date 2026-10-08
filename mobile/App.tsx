@@ -239,7 +239,12 @@ export default function App() {
           />
         )}
         {screen.name === "checkout" && profile && (
-          <CheckoutScreen profile={profile} lines={lines} onSubmit={placeOrder} onBack={() => setScreen({ name: "cart" })} />
+          <CheckoutScreen
+            profile={profile}
+            lines={lines.filter((l) => variants.some((v) => v.id === l.variant_id))}
+            onSubmit={placeOrder}
+            onBack={() => setScreen({ name: "cart" })}
+          />
         )}
         {screen.name === "order" && (
           <OrderScreen order={screen.order} onPay={payOrder} onBack={() => setScreen({ name: "orders" })} />
